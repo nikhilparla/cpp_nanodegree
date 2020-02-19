@@ -8,8 +8,9 @@ using std::ifstream;
 using std::istringstream;
 using std::string;
 using std::vector;
+using std::abs;
 
-enum class State {kEmpty, kObstacle};
+enum class State {kEmpty, kObstacle, kClosed};
 
 
 vector<State> ParseLine(string line) {
@@ -41,12 +42,21 @@ vector<vector<State>> ReadBoardFile(string path) {
   return board;
 }
 
-// TODO: Write the Heuristic function here.
-int Heuristic(int x1, int y1, int x2, int y2)
-{
-    return (std::abs(x2-x1) + std::abs(y2 - y1));
+
+// Calculate the manhattan distance
+int Heuristic(int x1, int y1, int x2, int y2) {
+  return abs(x2 - x1) + abs(y2 - y1);
 }
 
+// TODO: Write the AddToOpen function here.
+void AddToOpen(int x, int y, int g, int h)
+{
+    vector<vector<int>> open_nodes{};
+    vector<vector<State>> grid{};
+    vector<int> node{x,y,g,h};
+    open_nodes.push_back(node);
+    grid[x][y] = State::kClosed;
+}
 
 /** 
  * Implementation of A* search algorithm
@@ -76,7 +86,7 @@ void PrintBoard(const vector<vector<State>> board) {
   }
 }
 
-#include "test.cpp" // For testing solution
+#include "test.cpp"
 
 int main() {
   int init[2]{0, 0};
@@ -86,4 +96,5 @@ int main() {
   PrintBoard(solution);
   // Tests
   TestHeuristic();
+  TestAddToOpen();
 }

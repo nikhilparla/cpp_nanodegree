@@ -6,3 +6,5 @@
 #### A* Search
  - Learning cpp by implementing the a* search algo
  - initial commit has the files with the structure of the code in place. No hueristic at this time.
+ - Manhattan distance for the hueristic function
+ - Added helper functions
