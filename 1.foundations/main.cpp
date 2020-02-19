@@ -4,12 +4,10 @@
 #include <string>
 #include <vector>
 using std::cout;
-using std::endl;
 using std::ifstream;
 using std::istringstream;
 using std::string;
 using std::vector;
-using std::abs;
 
 enum class State {kEmpty, kObstacle};
 
@@ -43,13 +41,23 @@ vector<vector<State>> ReadBoardFile(string path) {
   return board;
 }
 
-// TODO: Write the Search function stub here.
-vector<vector<State>> search(vector<vector<State>> board, int init[], int goal[])
+// TODO: Write the Heuristic function here.
+int Heuristic(int x1, int y1, int x2, int y2)
 {
-    vector<vector<State>> solution{};
-    cout << "No path found" << endl;
-    return solution;
+    return (std::abs(x2-x1) + std::abs(y2 - y1));
 }
+
+
+/** 
+ * Implementation of A* search algorithm
+ */
+vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2]) {
+
+
+  cout << "No path found!" << "\n";
+  return std::vector<vector<State>> {};
+}
+
 
 string CellString(State cell) {
   switch(cell) {
@@ -68,16 +76,14 @@ void PrintBoard(const vector<vector<State>> board) {
   }
 }
 
+#include "test.cpp" // For testing solution
 
 int main() {
-  // TODO: Declare "init" and "goal" arrays with values {0, 0} and {4, 5} respectively.
-  int init[] = {0,0};
-  int goal[] = {4,5};
+  int init[2]{0, 0};
+  int goal[2]{4, 5};
   auto board = ReadBoardFile("1.board");
-  vector<vector<State>> solution;
-  // TODO: Call Search with "board", "init", and "goal". Store the results in the variable "solution".
-  solution = search(board, init, goal);
-
-  // TODO: Change the following line to pass "solution" to PrintBoard.
+  auto solution = Search(board, init, goal);
   PrintBoard(solution);
+  // Tests
+  TestHeuristic();
 }
